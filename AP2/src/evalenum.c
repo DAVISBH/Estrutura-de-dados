@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
     initVector(vet, opt.size);
     vet[opt.size] = vet[0]; // for heapsort
 
-    //clock_gettime(CLOCK_MONOTONIC, &inittp);
+    clock_gettime(CLOCK_MONOTONIC, &inittp);
 
     switch (opt.alg) {
         case ALGINSERTION:
@@ -31,6 +31,7 @@ int main(int argc, char **argv) {
         case ALGSELECTION:
             selectionSort(vet, 0, opt.size - 1, &s);
             break;
+            /*
         case ALGQSORT:
             quickSort(vet, 0, opt.size - 1, &s);
             break;
@@ -49,15 +50,16 @@ int main(int argc, char **argv) {
         case ALGRECSEL:
             recursiveSelectionSort(vet, 0, opt.size - 1, &s);
             break;
+            */
         default:
             fprintf(stderr, "Algoritmo inválido.\n");
             exit(1);
     }
 
-    //clock_gettime(CLOCK_MONOTONIC, &endtp);
+    clock_gettime(CLOCK_MONOTONIC, &endtp);
     clkDiff(inittp, endtp, &restp);
 
-    printf("%s\n", printsortperf(&s, buf, "Algoritmo"));
+    printf("%s\n", printsortperf(&s, buf, "alg"));
     printf("Tempo: %ld.%09ld segundos\n", restp.tv_sec, restp.tv_nsec);
 
     free(vet);

@@ -10,6 +10,13 @@ typedef struct opt {
     int alg;
 } opt_t;
 
+typedef struct alg{
+  int num;
+  char * name;
+} alg_t;
+
+int name2num(char * name);
+char * num2name(int num);
 void resetcounter(sortperf_t *s);
 void inccmp(sortperf_t *s, int num);
 void incmove(sortperf_t *s, int num);

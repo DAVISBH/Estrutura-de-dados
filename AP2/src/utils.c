@@ -3,6 +3,38 @@
 #include <string.h>
 #include <time.h>
 #include "utils.h"
+#include <unistd.h>
+
+alg_t algvet[]={
+  {ALGINSERTION,"i"},
+  {ALGSELECTION,"s"},
+  {ALGQSORT,"q"},
+  {ALGQSORT3,"q3"},
+  {ALGQSORTINS,"qi"},
+  {ALGQSORT3INS,"q3i"},
+  {ALGSHELLSORT,"h"},
+  {ALGRECSEL,"rs"},
+  {0,0}
+};
+
+
+int name2num(char * name){
+  int i=0;
+  while (algvet[i].num){
+    if (!strcmp(algvet[i].name,name)) return algvet[i].num;
+    i++;
+  }
+  return 0;
+}
+
+char * num2name(int num){
+  int i=0;
+  while (algvet[i].num){
+    if (algvet[i].num==num) return algvet[i].name;
+    i++;
+  }
+  return 0;
+}
 
 void resetcounter(sortperf_t *s) {
     s->cmp = 0;

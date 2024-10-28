@@ -13,10 +13,10 @@ SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
 OBJ_FILES = $(SRC_FILES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Nome do executável
-EXEC = $(BIN_DIR)/sortperf
+EXEC = $(BIN_DIR)/pa1.out
 
 # Opções do compilador
-CFLAGS = -I$(INC_DIR) -Wall -Wextra -lm
+CFLAGS = -I$(INC_DIR) -Wall -Wextra -lm -lrt
 
 # Regra padrão para compilar o executável
 all: $(EXEC)
