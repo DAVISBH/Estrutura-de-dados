@@ -26,7 +26,7 @@ int main (int argc, char ** argv){
   initVector(vet, opt.size);
   vet[opt.size] = vet[0]; // for heapsort
   //if (opt.size < 100) printVector(vet, opt.size);
-
+  
   clock_gettime(CLOCK_MONOTONIC, &inittp);
   
   // execute algorithm
