@@ -1,0 +1,80 @@
+1. O ponteiro buf nunca é inicializado ou apontado para uma área válida de memória.
+
+2. Script started, output log file is 'teste'.
+[?2004h]0;campana@DESKTOP-1PLM67U: /mnt/c/Users/Gustavo/Desktop/pa03[01;32mcampana@DESKTOP-1PLM67U[00m:[01;34m/mnt/c/Users/Gustavo/Desktop/pa03[00m$ scriptdikogsdg[2Pscriptvalgrind --leak-check=full ./c1[6Psudo apt install valgrindvalgrind --leak-check=full ./c10[K9
+[?2004l
+==3996== Memcheck, a memory error detector
+==3996== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==3996== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==3996== Command: ./c19
+==3996== 
+enter a number:
+5
+==3996== Invalid write of size 2
+==3996==    at 0x4852EB3: memmove (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3996==    by 0x48BFD77: memcpy (string_fortified.h:29)
+==3996==    by 0x48BFD77: __printf_buffer_write (Xprintf_buffer_write.c:39)
+==3996==    by 0x48C80FB: __printf_buffer (vfprintf-internal.c:653)
+==3996==    by 0x48E79D6: __vsprintf_internal (iovsprintf.c:62)
+==3996==    by 0x48C54B6: sprintf (sprintf.c:30)
+==3996==    by 0x1092A5: printSum (in /mnt/c/Users/Gustavo/Desktop/pa03/c19)
+==3996==    by 0x1092DD: main (in /mnt/c/Users/Gustavo/Desktop/pa03/c19)
+==3996==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==3996== 
+==3996== 
+==3996== Process terminating with default action of signal 11 (SIGSEGV)
+==3996==  Access not within mapped region at address 0x0
+==3996==    at 0x4852EB3: memmove (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3996==    by 0x48BFD77: memcpy (string_fortified.h:29)
+==3996==    by 0x48BFD77: __printf_buffer_write (Xprintf_buffer_write.c:39)
+==3996==    by 0x48C80FB: __printf_buffer (vfprintf-internal.c:653)
+==3996==    by 0x48E79D6: __vsprintf_internal (iovsprintf.c:62)
+==3996==    by 0x48C54B6: sprintf (sprintf.c:30)
+==3996==    by 0x1092A5: printSum (in /mnt/c/Users/Gustavo/Desktop/pa03/c19)
+==3996==    by 0x1092DD: main (in /mnt/c/Users/Gustavo/Desktop/pa03/c19)
+==3996==  If you believe this happened as a result of a stack
+==3996==  overflow in your program's main thread (unlikely but
+==3996==  possible), you can try to increase the size of the
+==3996==  main thread stack using the --main-stacksize= flag.
+==3996==  The main thread stack size used in this run was 8388608.
+==3996== 
+==3996== HEAP SUMMARY:
+==3996==     in use at exit: 2,048 bytes in 2 blocks
+==3996==   total heap usage: 2 allocs, 0 frees, 2,048 bytes allocated
+==3996== 
+==3996== LEAK SUMMARY:
+==3996==    definitely lost: 0 bytes in 0 blocks
+==3996==    indirectly lost: 0 bytes in 0 blocks
+==3996==      possibly lost: 0 bytes in 0 blocks
+==3996==    still reachable: 2,048 bytes in 2 blocks
+==3996==         suppressed: 0 bytes in 0 blocks
+==3996== Reachable blocks (those to which a pointer was found) are not shown.
+==3996== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==3996== 
+==3996== For lists of detected and suppressed errors, rerun with: -s
+==3996== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
+Segmentation fault (core dumped)
+
+3. 'buf' agora é uma variável local na função printSum. Aloquei uma memória para 'buf', suficiente para armazenar a string
+gerada. Liberei a memória alocada antes do fim do código.
+
+4. Script started, output log file is 'teste'.
+[?2004h]0;campana@DESKTOP-1PLM67U: /mnt/c/Users/Gustavo/Desktop/pa03[01;32mcampana@DESKTOP-1PLM67U[00m:[01;34m/mnt/c/Users/Gustavo/Desktop/pa03[00m$ scriptdikogsdg[2Pscriptvalgrind --leak-check=full ./c1[6Psudo apt install valgrindvalgrind --leak-check=full ./c19
+[?2004l
+==4157== Memcheck, a memory error detector
+==4157== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==4157== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==4157== Command: ./c19
+==4157== 
+enter a number:
+5
+sum=15
+==4157== 
+==4157== HEAP SUMMARY:
+==4157==     in use at exit: 0 bytes in 0 blocks
+==4157==   total heap usage: 3 allocs, 3 frees, 2,098 bytes allocated
+==4157== 
+==4157== All heap blocks were freed -- no leaks are possible
+==4157== 
+==4157== For lists of detected and suppressed errors, rerun with: -s
+==4157== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

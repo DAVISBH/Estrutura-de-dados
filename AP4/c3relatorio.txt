@@ -1,0 +1,48 @@
+1. A variavel 'a' é sobrescrita a cada loop e os blocos de memoria ficam perdidos porque o 'a' é atualizado sem liberar
+o espaço anterior.
+
+2. [?2004h]0;campana@DESKTOP-1PLM67U: /mnt/c/Users/Gustavo/Desktop/pa03[01;32mcampana@DESKTOP-1PLM67U[00m:[01;34m/mnt/c/Users/Gustavo/Desktop/pa03[00m$ valgrind--[K[K --leak-check=fullç[K ./c3
+[?2004l
+==2349== Memcheck, a memory error detector
+==2349== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==2349== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==2349== Command: ./c3
+==2349== 
+==2349== 
+==2349== HEAP SUMMARY:
+==2349==     in use at exit: 3,600 bytes in 9 blocks
+==2349==   total heap usage: 10 allocs, 1 frees, 4,000 bytes allocated
+==2349== 
+==2349== 3,600 bytes in 9 blocks are definitely lost in loss record 1 of 1
+==2349==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2349==    by 0x10918E: main (in /mnt/c/Users/Gustavo/Desktop/pa03/c3)
+==2349== 
+==2349== LEAK SUMMARY:
+==2349==    definitely lost: 3,600 bytes in 9 blocks
+==2349==    indirectly lost: 0 bytes in 0 blocks
+==2349==      possibly lost: 0 bytes in 0 blocks
+==2349==    still reachable: 0 bytes in 0 blocks
+==2349==         suppressed: 0 bytes in 0 blocks
+==2349== 
+==2349== For lists of detected and suppressed errors, rerun with: -s
+==2349== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+[?2004h]0;campana@DESKTOP-1PLM67U: /mnt/c/Users/Gustavo/Desktop/pa03[01;32mcampana@DESKTOP-1PLM67U[00m:[01;34m/mnt/c/Us
+
+3. Coloquei o free dentro do for, para que o espaço alocado na variavel 'a' seja liberado a cada loop.
+
+4. [?2004h]0;campana@DESKTOP-1PLM67U: /mnt/c/Users/Gustavo/Desktop/pa03[01;32mcampana@DESKTOP-1PLM67U[00m:[01;34m/mnt/c/Users/Gustavo/Desktop/pa03[00m$ scriptdikogsdg[2Pscriptdikogsdg[2Pscript[Kvalgrind[K[K[C[C[C[C[C[C[K[K[K[K[K[Kscriptdikogsdg[2Pscriptvalgrind --leak-check=full ./c1[K3
+[?2004l
+==2561== Memcheck, a memory error detector
+==2561== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==2561== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==2561== Command: ./c3
+==2561== 
+==2561== 
+==2561== HEAP SUMMARY:
+==2561==     in use at exit: 0 bytes in 0 blocks
+==2561==   total heap usage: 10 allocs, 10 frees, 4,000 bytes allocated
+==2561== 
+==2561== All heap blocks were freed -- no leaks are possible
+==2561== 
+==2561== For lists of detected and suppressed errors, rerun with: -s
+==2561== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

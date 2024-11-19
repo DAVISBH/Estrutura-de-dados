@@ -1,0 +1,124 @@
+1) A variavel fat deve ser iniciada com o valor de 1 visando o funcionamento correto do programa. Como isso não estava acontecendo, a variavel iniciava com um valor aleatorio presente no heap.
+
+2) Script started on 2024-11-19 14:02:08-03:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="238" LINES="21"]
+[?2004hdavisbh@DAVIS-PC:~/Estrutura de dados/Estrutura-de-dados/AP4$ exitgdb ./programacc -g c10.c -o programa[1P[1P[1@1[1@4
+[?2004l
+[?2004hdavisbh@DAVIS-PC:~/Estrutura de dados/Estrutura-de-dados/AP4$ gcc -g c14.c -o programaexit[Kgdb ./programa
+[?2004l
+[35;1mGNU gdb (Ubuntu 15.0.50.20240403-0ubuntu1) 15.0.50.20240403-git[m
+Copyright (C) 2024 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <[32mhttp://gnu.org/licenses/gpl.html[m>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+[32m<https://www.gnu.org/software/gdb/bugs/>[m.
+Find the GDB manual and other documentation resources online at:
+    <[32mhttp://www.gnu.org/software/gdb/documentation/[m>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from [32m./programa[m...
+[?2004h(gdb) run
+[?2004l
+Starting program: [32m/home/davisbh/Estrutura de dados/Estrutura-de-dados/AP4/programa[m 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "[32m/lib/x86_64-linux-gnu/libthread_db.so.1[m".
+Positive integer:5
+Factorial 5 = 3932040
+[Inferior 1 (process 36066) exited normally]
+[?2004h[?2004l
+[?2004h(gdb) quit
+[?2004l
+[?2004hdavisbh@DAVIS-PC:~/Estrutura de dados/Estrutura-de-dados/AP4$ gdb ./programacc -g c14.c -o programaexit[Kgdb ./programacc -g c10.c -o programaexit[Kvalgrind --leak-check=full --track-origins=yes ./programaexit[Kvalgrind --leak-check=full --track-origins=yes ./programa
+[?2004l
+==36162== Memcheck, a memory error detector
+==36162== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==36162== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==36162== Command: ./programa
+==36162== 
+Positive integer:5
+==36162== Conditional jump or move depends on uninitialised value(s)
+==36162==    at 0x48C90BB: __printf_buffer (vfprintf-process-arg.c:58)
+==36162==    by 0x48CA72A: __vfprintf_internal (vfprintf-internal.c:1544)
+==36162==    by 0x48BF1A2: printf (printf.c:33)
+==36162==    by 0x10920D: main (c14.c:12)
+==36162==  Uninitialised value was created by a stack allocation
+==36162==    at 0x109189: main (c14.c:3)
+==36162== 
+==36162== Use of uninitialised value of size 8
+==36162==    at 0x48BE0AB: _itoa_word (_itoa.c:183)
+==36162==    by 0x48C8C8B: __printf_buffer (vfprintf-process-arg.c:155)
+==36162==    by 0x48CA72A: __vfprintf_internal (vfprintf-internal.c:1544)
+==36162==    by 0x48BF1A2: printf (printf.c:33)
+==36162==    by 0x10920D: main (c14.c:12)
+==36162==  Uninitialised value was created by a stack allocation
+==36162==    at 0x109189: main (c14.c:3)
+==36162== 
+==36162== Conditional jump or move depends on uninitialised value(s)
+==36162==    at 0x48BE0BC: _itoa_word (_itoa.c:183)
+==36162==    by 0x48C8C8B: __printf_buffer (vfprintf-process-arg.c:155)
+==36162==    by 0x48CA72A: __vfprintf_internal (vfprintf-internal.c:1544)
+==36162==    by 0x48BF1A2: printf (printf.c:33)
+==36162==    by 0x10920D: main (c14.c:12)
+==36162==  Uninitialised value was created by a stack allocation
+==36162==    at 0x109189: main (c14.c:3)
+==36162== 
+==36162== Conditional jump or move depends on uninitialised value(s)
+==36162==    at 0x48C8D79: __printf_buffer (vfprintf-process-arg.c:186)
+==36162==    by 0x48CA72A: __vfprintf_internal (vfprintf-internal.c:1544)
+==36162==    by 0x48BF1A2: printf (printf.c:33)
+==36162==    by 0x10920D: main (c14.c:12)
+==36162==  Uninitialised value was created by a stack allocation
+==36162==    at 0x109189: main (c14.c:3)
+==36162== 
+Factorial 5 = 3720
+==36162== 
+==36162== HEAP SUMMARY:
+==36162==     in use at exit: 0 bytes in 0 blocks
+==36162==   total heap usage: 2 allocs, 2 frees, 2,048 bytes allocated
+==36162== 
+==36162== All heap blocks were freed -- no leaks are possible
+==36162== 
+==36162== For lists of detected and suppressed errors, rerun with: -s
+==36162== ERROR SUMMARY: 10 errors from 4 contexts (suppressed: 0 from 0)
+[?2004hdavisbh@DAVIS-PC:~/Estrutura de dados/Estrutura-de-dados/AP4$ ^C[?2004l
+[?2004h[?2004l
+
+[?2004hdavisbh@DAVIS-PC:~/Estrutura de dados/Estrutura-de-dados/AP4$ exit
+[?2004l
+exit
+
+Script done on 2024-11-19 14:02:43-03:00 [COMMAND_EXIT_CODE="130"]
+
+
+4) Script started on 2024-11-19 14:03:49-03:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="238" LINES="21"]
+[?2004hdavisbh@DAVIS-PC:~/Estrutura de dados/Estrutura-de-dados/AP4$ exitvalgrind --leak-check=full --track-origins=yes ./programagdb ./programa[Kcc -g c14.c -o programa[1@c[1@o[1@r[1@r[1@e[1@t[1@o
+[?2004l
+[?2004hdavisbh@DAVIS-PC:~/Estrutura de dados/Estrutura-de-dados/AP4$ gcc -g c14correto.c -o programaexit[Kvalgrind --leak-check=full --track-origins=yes ./programagdb ./programa[K[43@valgrind --leak-check=full --track-origins=yes[C[C[C[C[C[C[C[C[C[C[C
+[?2004l
+==36626== Memcheck, a memory error detector
+==36626== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==36626== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==36626== Command: ./programa
+==36626== 
+Positive integer:5
+Factorial 5 = 120
+==36626== 
+==36626== HEAP SUMMARY:
+==36626==     in use at exit: 0 bytes in 0 blocks
+==36626==   total heap usage: 2 allocs, 2 frees, 2,048 bytes allocated
+==36626== 
+==36626== All heap blocks were freed -- no leaks are possible
+==36626== 
+==36626== For lists of detected and suppressed errors, rerun with: -s
+==36626== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004hdavisbh@DAVIS-PC:~/Estrutura de dados/Estrutura-de-dados/AP4$ clear
+[?2004l
+[H[2J[3J[?2004hdavisbh@DAVIS-PC:~/Estrutura de dados/Estrutura-de-dados/AP4$ exit
+[?2004l
+exit
+
+Script done on 2024-11-19 14:04:05-03:00 [COMMAND_EXIT_CODE="0"]

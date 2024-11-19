@@ -1,0 +1,64 @@
+1) A cada iteração no while, aloca-se novos endereços para o ponteiro e perde-se os da interação anterior.
+
+2) ^C==26828== 
+==26828== Process terminating with default action of signal 2 (SIGINT)
+==26828==    at 0x497B572: write (write.c:26)
+==26828==    by 0x48F2964: _IO_file_write@@GLIBC_2.2.5 (fileops.c:1181)
+==26828==    by 0x48F1560: new_do_write (fileops.c:449)
+==26828==    by 0x48F1560: _IO_do_write@@GLIBC_2.2.5 (fileops.c:426)
+==26828==    by 0x48F2A9E: _IO_new_file_xsputn (fileops.c:1244)
+==26828==    by 0x48F2A9E: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+==26828==    by 0x48BFCB8: __printf_buffer_flush_to_file (printf_buffer_to_file.c:59)
+==26828==    by 0x48BFCB8: __printf_buffer_to_file_done (printf_buffer_to_file.c:120)
+==26828==    by 0x48CA732: __vfprintf_internal (vfprintf-internal.c:1545)
+==26828==    by 0x48BF1A2: printf (printf.c:33)
+==26828==    by 0x10919D: main (c10.c:10)
+==26828== 
+==26828== HEAP SUMMARY:
+==26828==     in use at exit: 1,971,840 bytes in 15,398 blocks
+==26828==   total heap usage: 15,398 allocs, 0 frees, 1,971,840 bytes allocated
+==26828== 
+==26828== 1,970,688 bytes in 15,396 blocks are definitely lost in loss record 3 of 3
+==26828==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26828==    by 0x10917E: main (c10.c:9)
+==26828== 
+==26828== LEAK SUMMARY:
+==26828==    definitely lost: 1,970,688 bytes in 15,396 blocks
+==26828==    indirectly lost: 0 bytes in 0 blocks
+==26828==      possibly lost: 0 bytes in 0 blocks
+==26828==    still reachable: 1,152 bytes in 2 blocks
+==26828==         suppressed: 0 bytes in 0 blocks
+==26828== Reachable blocks (those to which a pointer was found) are not shown.
+==26828== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==26828== 
+==26828== For lists of detected and suppressed errors, rerun with: -s
+==26828== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+
+[?2004hdavisbh@DAVIS-PC:~/Estrutura de dados/Estrutura-de-dados/AP4$ exit
+[?2004l
+exit
+
+Script done on 2024-11-19 13:22:07-03:00 [COMMAND_EXIT_CODE="130"]
+
+4) Script started on 2024-11-19 13:12:59-03:00 [TERM="xterm-256color" TTY="/dev/pts/5" COLUMNS="238" LINES="18"]
+[?2004hdavisbh@DAVIS-PC:~/Estrutura de dados/Estrutura-de-dados/AP4$ exitvalgrind --leak-check=full --track-origins=yes ./programa
+[?2004l
+==24353== Memcheck, a memory error detector
+==24353== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==24353== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==24353== Command: ./programa
+==24353== 
+==24353== 
+==24353== HEAP SUMMARY:
+==24353==     in use at exit: 0 bytes in 0 blocks
+==24353==   total heap usage: 2 allocs, 2 frees, 53 bytes allocated
+==24353== 
+==24353== All heap blocks were freed -- no leaks are possible
+==24353== 
+==24353== For lists of detected and suppressed errors, rerun with: -s
+==24353== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004hdavisbh@DAVIS-PC:~/Estrutura de dados/Estrutura-de-dados/AP4$ exit
+[?2004l
+exit
+
+Script done on 2024-11-19 13:13:02-03:00 [COMMAND_EXIT_CODE="0"]

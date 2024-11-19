@@ -1,0 +1,47 @@
+1. Tenta acessar a posição 27, que está fora dos limites do bloco alocado.
+
+2. Script started on 2024-11-19 13:15:51-03:00 [TERM="xterm-256color" TTY="/dev/pts/17" COLUMNS="221" LINES="12"]
+[?2004h]0;campana@DESKTOP-1PLM67U: /mnt/c/Users/Gustavo/Desktop/pa03[01;32mcampana@DESKTOP-1PLM67U[00m:[01;34m/mnt/c/Users/Gustavo/Desktop/pa03[00m$ scriptdikogsdg[2Pscriptvalgrind --leak-check=full ./c1[6Psudo apt install valgrindvalgrind --leak-check=full ./c1[K7
+[?2004l
+==2884== Memcheck, a memory error detector
+==2884== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==2884== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==2884== Command: ./c7
+==2884== 
+==2884== Invalid write of size 1
+==2884==    at 0x1091BC: main (in /mnt/c/Users/Gustavo/Desktop/pa03/c7)
+==2884==  Address 0x4a7405a is 0 bytes after a block of size 26 alloc'd
+==2884==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2884==    by 0x109183: main (in /mnt/c/Users/Gustavo/Desktop/pa03/c7)
+==2884== 
+==2884== 
+==2884== HEAP SUMMARY:
+==2884==     in use at exit: 0 bytes in 0 blocks
+==2884==   total heap usage: 1 allocs, 1 frees, 26 bytes allocated
+==2884== 
+==2884== All heap blocks were freed -- no leaks are possible
+==2884== 
+==2884== For lists of detected and suppressed errors, rerun with: -s
+==2884== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+[?2004h]0;campana@DESKTOP-1PLM67U: /mnt/c/Users/Gustavo/Desktop/pa03[01;32mcampana@DESKTO
+
+3. Aumentei o tamanho do calloc para 27, para caber todas as letras do alfabeto e ter o ultimo caractere como nulo.
+
+4. Script started, output log file is 'teste'.
+[?2004h]0;campana@DESKTOP-1PLM67U: /mnt/c/Users/Gustavo/Desktop/pa03[01;32mcampana@DESKTOP-1PLM67U[00m:[01;34m/mnt/c/Users/Gustavo/Desktop/pa03[00m$ scriptdikogsdg[2Pscriptvalgrind --leak-check=full ./c1[K7
+[?2004l
+==3032== Memcheck, a memory error detector
+==3032== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==3032== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==3032== Command: ./c7
+==3032== 
+==3032== 
+==3032== HEAP SUMMARY:
+==3032==     in use at exit: 0 bytes in 0 blocks
+==3032==   total heap usage: 1 allocs, 1 frees, 27 bytes allocated
+==3032== 
+==3032== All heap blocks were freed -- no leaks are possible
+==3032== 
+==3032== For lists of detected and suppressed errors, rerun with: -s
+==3032== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004h]0;campana@DESKTOP-1PLM67U: /mnt/c/Users/Gustavo/Des
