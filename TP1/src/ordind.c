@@ -237,18 +237,50 @@ int OrdenaSelectionSort(OrdInd_ptr poi, int atribid) {
 void OrdenaQuickSort(OrdInd_ptr poi, int atribid, int low, int high) {
     if (low < high) {
         int p = Particao(poi, atribid, low, high);
+        
+        // Verifica se a partição foi bem-sucedida
+        if (p == -1) {
+            fprintf(stderr, "Erro durante a partição.\n");
+            return;  // Sai em caso de erro
+        }
+
         OrdenaQuickSort(poi, atribid, low, p - 1);
         OrdenaQuickSort(poi, atribid, p + 1, high);
     }
 }
 
 int Particao(OrdInd_ptr poi, int atribid, int low, int high) {
+    // Verifica se o ponteiro e os dados são válidos
+    if (!poi || !poi->registros || !poi->indices || atribid < 0 || atribid >= poi->numAtributos) {
+        fprintf(stderr, "Erro: Dados inválidos ou índice fora do limite.\n");
+        return -1;  // Retorna -1 para indicar erro
+    }
+
     int *indice = poi->indices[atribid];
-    char *pivot = poi->registros[indice[high]][atribid]; // Pivô é o último elemento
+    if (indice == NULL) {
+        fprintf(stderr, "Erro: Índice para o atributo %d não alocado.\n", atribid);
+        return -1;
+    }
+
+    // Verifica se o índice de registros está dentro do intervalo
+    if (high >= poi->numRegistros || low < 0) {
+        fprintf(stderr, "Erro: Índice fora do intervalo de registros.\n");
+        return -1;
+    }
+
+    char *pivot = poi->registros[indice[high]][atribid];  // Pivô é o último elemento
     int i = low - 1;
 
     for (int j = low; j < high; j++) {
-        if (strcmp(poi->registros[indice[j]][atribid], pivot) < 0) {
+        // Verifica se as strings são válidas antes de comparar
+        char *current_value = poi->registros[indice[j]][atribid];
+        if (current_value == NULL || pivot == NULL) {
+            fprintf(stderr, "Erro: Valor nulo encontrado durante a comparação.\n");
+            return -1;  // Retorna erro se houver valor nulo
+        }
+
+        // Compara os valores do atributo, levando em conta a ordem lexicográfica
+        if (strcmp(current_value, pivot) < 0) {
             i++;
             // Troca os índices
             int temp = indice[i];
@@ -262,7 +294,7 @@ int Particao(OrdInd_ptr poi, int atribid, int low, int high) {
     indice[i + 1] = indice[high];
     indice[high] = temp;
 
-    return i + 1;
+    return i + 1;  // Retorna a posição do pivô
 }
 
 void OrdenaBubbleSort(OrdInd_ptr poi, int atribid) {
@@ -313,5 +345,32 @@ void ImprimeOrdenadoIndice(OrdInd_ptr poi, int atribid) {
             }
         }
         printf("\n");
+    }
+}
+
+void printOrdInd(const OrdInd_t *ordInd) {
+    // Verifica se o ponteiro é válido
+    if (!ordInd) {
+        printf("Estrutura inválida.\n");
+        return;
+    }
+
+    // Imprime os atributos
+    //printf("Atributos (%d):\n", ordInd->numAtributos);
+    for (int i = 0; i < ordInd->numAtributos; i++) {
+        if (ordInd->atributos[i]) {
+            //printf("  [%d]: %s\n", i, ordInd->atributos[i]);
+        }
+    }
+
+    // Imprime os registros
+    printf("Registros (%d):\n", ordInd->numRegistros);
+    for (int i = 0; i < ordInd->numRegistros; i++) {
+        printf("  Registro %d:\n", i+1);
+        for (int j = 0; j < ordInd->numAtributos; j++) {
+            if (ordInd->registros[i][j]) {
+                printf("    [%d]: %s\n", j, ordInd->registros[i][j]);
+            }
+        }
     }
 }
