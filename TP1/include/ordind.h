@@ -21,8 +21,10 @@ int CarregaArquivo(OrdInd_ptr poi, char *nomeentrada);
 int NumAtributos(OrdInd_ptr poi);
 int NomeAtributo(OrdInd_ptr poi, int pos, char *nome);
 int CriaIndice(OrdInd_ptr poi, int atribid);
-int OrdenaIndice(OrdInd_ptr poi, int atribid);
-//int ImprimeOrdenadoIndice(OrdInd_ptr poi, int atribid);
-
+int OrdenaSelectionSort(OrdInd_ptr poi, int atrbid);
+void OrdenaBubbleSort(OrdInd_ptr poi, int atribid);
+void OrdenaQuickSort(OrdInd_ptr poi, int atribid, int low, int high);
+int Particao(OrdInd_ptr poi, int atribid, int low, int high);
+void ImprimeOrdenadoIndice(OrdInd_ptr poi, int atribid);
 
 #endif // ORDIND_H

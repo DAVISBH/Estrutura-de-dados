@@ -188,24 +188,130 @@ int CriaIndice(OrdInd_ptr poi, int atribid) {
     return 1;
 }
 
-// Função de comparação para a ordenação dos índices com base no atributo
-int comparaIndice(const void *a, const void *b, void *param) {
-    OrdInd_ptr poi = (OrdInd_ptr)param;
-    int indexA = *(int *)a;
-    int indexB = *(int *)b;
+int OrdenaSelectionSort(OrdInd_ptr poi, int atribid) {
+    // Verifica se os registros estão disponíveis
+    if (!poi || !poi->registros || poi->numRegistros <= 0 || atribid < 0 || atribid >= poi->numAtributos) {
+        fprintf(stderr, "Erro: Estrutura de registros inválida ou atributo fora do intervalo.\n");
+        return 0;
+    }
 
-    // Comparar os valores dos registros de acordo com o atributo (atribid)
-    return strcmp(poi->registros[indexA][*(int *)param], poi->registros[indexB][*(int *)param]);
+    // Inicializa o vetor de índices para o atributo atribid, se necessário
+    if (!poi->indices) {
+        poi->indices = malloc(sizeof(int *) * poi->numAtributos);
+        for (int i = 0; i < poi->numAtributos; i++) {
+            poi->indices[i] = NULL;
+        }
+    }
+    if (!poi->indices[atribid]) {
+        poi->indices[atribid] = malloc(sizeof(int) * poi->numRegistros);
+        for (int i = 0; i < poi->numRegistros; i++) {
+            poi->indices[atribid][i] = i;  // Inicializa o vetor de índices com a ordem natural
+        }
+    }
+
+    // Pega o vetor de índices para o atributo especificado
+    int *indice = poi->indices[atribid];
+
+    // Selection Sort para ordenar indiretamente pelo atributo atribid
+    for (int i = 0; i < poi->numRegistros - 1; i++) {
+        int menor = i;  // Assume que o menor elemento está em `i`
+
+        for (int j = i + 1; j < poi->numRegistros; j++) {
+            // Compara os valores do atributo especificado
+            if (strcmp(poi->registros[indice[j]][atribid], poi->registros[indice[menor]][atribid]) < 0) {
+                menor = j;  // Atualiza a posição do menor elemento
+            }
+        }
+
+        // Troca os índices para refletir a nova ordem
+        if (menor != i) {
+            int temp = indice[i];
+            indice[i] = indice[menor];
+            indice[menor] = temp;
+        }
+    }
+
+    return 1;  // Sucesso
 }
 
-// Função para ordenar os índices (ordenar indiretamente os registros)
-int OrdenaIndice(OrdInd_ptr poi, int atribid) {
-    if (!poi || atribid >= poi->numAtributos || !poi->indices || !poi->indices[atribid]) return 0;
+void OrdenaQuickSort(OrdInd_ptr poi, int atribid, int low, int high) {
+    if (low < high) {
+        int p = Particao(poi, atribid, low, high);
+        OrdenaQuickSort(poi, atribid, low, p - 1);
+        OrdenaQuickSort(poi, atribid, p + 1, high);
+    }
+}
+
+int Particao(OrdInd_ptr poi, int atribid, int low, int high) {
+    int *indice = poi->indices[atribid];
+    char *pivot = poi->registros[indice[high]][atribid]; // Pivô é o último elemento
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        if (strcmp(poi->registros[indice[j]][atribid], pivot) < 0) {
+            i++;
+            // Troca os índices
+            int temp = indice[i];
+            indice[i] = indice[j];
+            indice[j] = temp;
+        }
+    }
+
+    // Coloca o pivô na posição correta
+    int temp = indice[i + 1];
+    indice[i + 1] = indice[high];
+    indice[high] = temp;
+
+    return i + 1;
+}
+
+void OrdenaBubbleSort(OrdInd_ptr poi, int atribid) {
+    if (!poi || !poi->registros || poi->numRegistros <= 0 || atribid < 0 || atribid >= poi->numAtributos) {
+        fprintf(stderr, "Erro: Estrutura de registros inválida ou atributo fora do intervalo.\n");
+        return;
+    }
 
     int *indice = poi->indices[atribid];
 
-    // Passa o parâmetro 'poi' para a função de comparação
-    qsort_r(indice, poi->numRegistros, sizeof(int), comparaIndice, (void *)poi);
+    for (int i = 0; i < poi->numRegistros - 1; i++) {
+        for (int j = 0; j < poi->numRegistros - i - 1; j++) {
+            if (strcmp(poi->registros[indice[j]][atribid], poi->registros[indice[j + 1]][atribid]) > 0) {
+                // Troca os índices
+                int temp = indice[j];
+                indice[j] = indice[j + 1];
+                indice[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void ImprimeOrdenadoIndice(OrdInd_ptr poi, int atribid) {
     
-    return 1;
+    int larguras[poi->numRegistros];
+    for(int i = 0; i < poi->numRegistros; i++){
+        larguras[i] = 0;
+    }
+
+    // Passo 1: Determinar larguras máximas para cada coluna
+    for (int j = 0; j < poi->numAtributos; j++) {
+        for (int i = 0; i < poi->numRegistros; i++) {
+            if (poi->registros[i][j]) {
+                int comprimento = strlen(poi->registros[i][j]);
+                if (comprimento > larguras[j]) {
+                    larguras[j] = comprimento;
+                }
+            }
+        }
+    }
+
+    // Passo 2: Imprimir registros alinhados
+    for (int i = 0; i < poi->numRegistros; i++) {
+        printf("[%d] ", i+1);
+        for (int j = 0; j < poi->numAtributos; j++) {
+            if (poi->registros[i][j]) {
+                printf("%-*s\t", larguras[j], poi->registros[poi->indices[atribid][i]][j]);
+            }
+        }
+        printf("\n");
+    }
 }

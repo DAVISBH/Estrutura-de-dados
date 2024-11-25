@@ -36,15 +36,16 @@ int main(int argc, char ** argv){
 
     int numatrib = NumAtributos(poi);
     
-    for (int i = 0; i<numatrib; i++){
+    for (int i = 0; i < numatrib; i++){
         if (NomeAtributo(poi,i,aux)){
             if (!strcmp(aux,"name")||!strcmp(aux,"id")||!strcmp(aux,"address")){
                 CriaIndice(poi,i);
-                for(int i = 0; i < poi->numRegistros; i++){
-                    printf("%d ", poi->indices[2][i]);
-                }
-                OrdenaIndice (poi,i);
-                //ImprimeOrdenadoIndice (poi,i);
+                //OrdenaSelectionSort(poi, i);     
+                //OrdenaBubbleSort(poi, i);
+                //OrdenaQuickSort(poi, i, 0, poi->numRegistros);
+                //ImprimeOrdenadoIndice (poi, i);
+                imprimirPOI(poi, i);
+                getchar();
             } 
         }
     }
