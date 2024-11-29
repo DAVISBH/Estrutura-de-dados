@@ -2,7 +2,7 @@
 #include <ordind.h>
 #include <string.h>
 
-#define MAX_LINE_SIZE 4096
+#define MAX_LINE_SIZE 10000
 
 OrdInd_ptr Cria() {
     OrdInd_ptr poi = (OrdInd_ptr)malloc(sizeof(OrdInd_t));
@@ -39,7 +39,7 @@ int Destroi(OrdInd_ptr poi) {
 
         // Liberar índices
         if (poi->indices) {
-            for (int i = 0; i < poi->numAtributos; i++) {
+            for (int i = 0; i < poi->numAtributos - 1; i++) {
                 free(poi->indices[i]);
             }
             free(poi->indices);
@@ -63,7 +63,7 @@ int CarregaArquivo(OrdInd_ptr poi, char *nomeentrada) {
     // Lê a primeira linha do arquivo
     if (fgets(linha, sizeof(linha), file) != NULL) {
         // Converte a string da linha para um número inteiro
-        int num_atributos = atoi(linha) - 1;  // atoi converte a string para int
+        int num_atributos = atoi(linha);  // atoi converte a string para int
         //printf("Número de atributos: %d\n", num_atributos);
         poi->numAtributos = num_atributos;
     }
@@ -106,8 +106,6 @@ int CarregaArquivo(OrdInd_ptr poi, char *nomeentrada) {
             count++;
         }
     }
-
-    fgets(linha, sizeof(linha), file);
 
     // Lê a linha do arquivo que indica o numero de registros
     if (fgets(linha, sizeof(linha), file) != NULL) {
@@ -317,35 +315,30 @@ void OrdenaBubbleSort(OrdInd_ptr poi, int atribid) {
     }
 }
 
-void ImprimeOrdenadoIndice(OrdInd_ptr poi, int atribid) {
-    
-    int larguras[poi->numRegistros];
-    for(int i = 0; i < poi->numRegistros; i++){
-        larguras[i] = 0;
-    }
+void ImprimeOrdenadoIndice(OrdInd_ptr poi, int atribid, char* nomearquivo) {
+    FILE *file = fopen(nomearquivo, "r");
+    char linha[MAX_LINE_SIZE];
 
-    // Passo 1: Determinar larguras máximas para cada coluna
-    for (int j = 0; j < poi->numAtributos; j++) {
-        for (int i = 0; i < poi->numRegistros; i++) {
-            if (poi->registros[i][j]) {
-                int comprimento = strlen(poi->registros[i][j]);
-                if (comprimento > larguras[j]) {
-                    larguras[j] = comprimento;
-                }
-            }
+    for (int i = 0; i < 6; i++)
+    {
+        if (fgets(linha, sizeof(linha), file) != NULL) {
+            printf("%s", linha);
         }
     }
-
-    // Passo 2: Imprimir registros alinhados
-    for (int i = 0; i < poi->numRegistros; i++) {
-        printf("[%d] ", i+1);
+      
+    for (int i = 0; i < 10; i++) {
+        int printed = 0; // Indicador para verificar se algo foi impresso na linha
         for (int j = 0; j < poi->numAtributos; j++) {
-            if (poi->registros[i][j]) {
-                printf("%-*s\t", larguras[j], poi->registros[poi->indices[atribid][i]][j]);
+            if (poi->registros[poi->indices[atribid][i]][j]) {
+                if (printed) {
+                    printf(", "); // Adiciona ", " apenas após o primeiro item
+                }
+                printf("%s", poi->registros[poi->indices[atribid][i]][j]);
+                printed = 1; // Marca que pelo menos um atributo foi impresso
             }
         }
-        printf("\n");
-    }
+}
+    fclose(file);
 }
 
 void printOrdInd(const OrdInd_t *ordInd) {

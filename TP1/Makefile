@@ -11,7 +11,7 @@ OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 .PHONY: all clean debug release
 
 # Configuração padrão
-TARGET = $(BIN_DIR)/programa
+TARGET = $(BIN_DIR)/tp1.out
 CFLAGS = $(CFLAGS_COMMON) # Por padrão, sem -g
 
 all: release

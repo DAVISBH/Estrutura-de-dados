@@ -25,6 +25,6 @@ int OrdenaSelectionSort(OrdInd_ptr poi, int atrbid);
 void OrdenaBubbleSort(OrdInd_ptr poi, int atribid);
 void OrdenaQuickSort(OrdInd_ptr poi, int atribid, int low, int high);
 int Particao(OrdInd_ptr poi, int atribid, int low, int high);
-void ImprimeOrdenadoIndice(OrdInd_ptr poi, int atribid);
+void ImprimeOrdenadoIndice(OrdInd_ptr poi, int atribid, char *nomearquivo);
 
 #endif // ORDIND_H
