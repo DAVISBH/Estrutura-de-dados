@@ -1,3 +1,0 @@
-./bin/tp1.out <filename> runs the program.
-
-The input files are located at cad folder.

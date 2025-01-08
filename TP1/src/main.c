@@ -1,15 +1,21 @@
 #include <stdio.h>
 #include "ordind.h"
-#include <sys/time.h>
+#include <time.h>
+#include <sys/time.h>   
+
 
 int main(int argc, char **argv) {
     char aux[100];
+    clock_t start, end;
+    double cpu_time_used;
 
     for (int algorithm_op = 0; algorithm_op < 3; algorithm_op ++){  // Realiza o processo de ordenacao com cada algoritmo (3 vezes)
         OrdInd_ptr poi = Cria();
         if(argc != 2){
             return 1;
         }
+
+        start = clock();
         CarregaArquivo(poi, argv[1]);
         int numatrib = NumAtributos(poi);
 
@@ -20,25 +26,29 @@ int main(int argc, char **argv) {
                         case 0:
                             CriaIndice(poi, i);
                             OrdenaQuickSort(poi, i, 0, poi->numRegistros - 1);
-                            ImprimeOrdenadoIndice(poi, i, argv[1]); 
+                            //ImprimeOrdenadoIndice(poi, i, argv[1]); 
                             break;
                         case 1:
                             CriaIndice(poi, i);
                             OrdenaBubbleSort(poi, i);
-                            ImprimeOrdenadoIndice(poi, i, argv[1]);
+                            //ImprimeOrdenadoIndice(poi, i, argv[1]);
                             break;       
                         case 2:
                             CriaIndice(poi, i);
                             OrdenaSelectionSort(poi, i);
-                            ImprimeOrdenadoIndice(poi, i, argv[1]);
+                            //ImprimeOrdenadoIndice(poi, i, argv[1]);
                             break;  
                         default:
                             break;
                     }            
                 }
             }   
+
         }
         Destroi(poi);
+        end = clock();
+        cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+        printf("Tempo de execução: %.6f segundos\n", cpu_time_used);
     }
 
     return 0;
